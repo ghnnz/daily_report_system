@@ -16,6 +16,7 @@ import models.Employee;
 import models.validators.EmployeeValidator;
 import utils.DBUtil;
 import utils.EncryptUtil;
+
 /**
  * Servlet implementation class EmployeesUpdateServlet
  */
@@ -35,23 +36,23 @@ public class EmployeesUpdateServlet extends HttpServlet {
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO Auto-generated method stub
         String _token = (String)request.getParameter("_token");
-        if(_token != null && _token.equals(request.getSession().getId())){
+        if(_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
 
             Employee e = em.find(Employee.class, (Integer)(request.getSession().getAttribute("employee_id")));
 
             Boolean code_duplicate_check = true;
-            if(e.getCode().equals(request.getParameter("code"))){
+            if(e.getCode().equals(request.getParameter("code"))) {
                 code_duplicate_check = false;
             } else {
                 e.setCode(request.getParameter("code"));
             }
 
+
             Boolean password_check_flag = true;
             String password = request.getParameter("password");
-            if(password == null || password.equals("")){
+            if(password == null || password.equals("")) {
                 password_check_flag = false;
             } else {
                 e.setPassword(
@@ -89,8 +90,5 @@ public class EmployeesUpdateServlet extends HttpServlet {
             }
         }
     }
-
-
-
 
 }
